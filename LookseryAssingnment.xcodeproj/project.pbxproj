@@ -10,11 +10,16 @@
 		353B1F081AADBE39004234C5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 353B1F071AADBE39004234C5 /* main.m */; };
 		353B1F0B1AADBE39004234C5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 353B1F0A1AADBE39004234C5 /* AppDelegate.m */; };
 		353B1F0E1AADBE39004234C5 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 353B1F0D1AADBE39004234C5 /* MasterViewController.m */; };
-		353B1F111AADBE39004234C5 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 353B1F101AADBE39004234C5 /* DetailViewController.m */; };
+		353B1F111AADBE39004234C5 /* PersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 353B1F101AADBE39004234C5 /* PersonViewController.m */; };
 		353B1F141AADBE39004234C5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 353B1F121AADBE39004234C5 /* Main.storyboard */; };
 		353B1F161AADBE39004234C5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 353B1F151AADBE39004234C5 /* Images.xcassets */; };
 		353B1F191AADBE39004234C5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 353B1F171AADBE39004234C5 /* LaunchScreen.xib */; };
 		353B1F251AADBE3A004234C5 /* LookseryAssingnmentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 353B1F241AADBE3A004234C5 /* LookseryAssingnmentTests.m */; };
+		353B1F301AADBFB1004234C5 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 353B1F2F1AADBFB1004234C5 /* Person.m */; };
+		353B1F331AADD13C004234C5 /* PersonsDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 353B1F321AADD13C004234C5 /* PersonsDatabase.m */; };
+		353B1F361AADD175004234C5 /* sqlite3_unicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 353B1F351AADD175004234C5 /* sqlite3_unicode.c */; };
+		353B1F381AADD1C4004234C5 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 353B1F371AADD1C4004234C5 /* libsqlite3.dylib */; };
+		353B1F3A1AAE147B004234C5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353B1F391AAE147B004234C5 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,14 +40,22 @@
 		353B1F0A1AADBE39004234C5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		353B1F0C1AADBE39004234C5 /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		353B1F0D1AADBE39004234C5 /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
-		353B1F0F1AADBE39004234C5 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
-		353B1F101AADBE39004234C5 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		353B1F0F1AADBE39004234C5 /* PersonViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersonViewController.h; sourceTree = "<group>"; };
+		353B1F101AADBE39004234C5 /* PersonViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersonViewController.m; sourceTree = "<group>"; };
 		353B1F131AADBE39004234C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		353B1F151AADBE39004234C5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		353B1F181AADBE39004234C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		353B1F1E1AADBE3A004234C5 /* LookseryAssingnmentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LookseryAssingnmentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		353B1F231AADBE3A004234C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		353B1F241AADBE3A004234C5 /* LookseryAssingnmentTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LookseryAssingnmentTests.m; sourceTree = "<group>"; };
+		353B1F2E1AADBFB1004234C5 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		353B1F2F1AADBFB1004234C5 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		353B1F311AADD13C004234C5 /* PersonsDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonsDatabase.h; sourceTree = "<group>"; };
+		353B1F321AADD13C004234C5 /* PersonsDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonsDatabase.m; sourceTree = "<group>"; };
+		353B1F341AADD175004234C5 /* sqlite3_unicode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3_unicode.h; sourceTree = "<group>"; };
+		353B1F351AADD175004234C5 /* sqlite3_unicode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3_unicode.c; sourceTree = "<group>"; };
+		353B1F371AADD1C4004234C5 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		353B1F391AAE147B004234C5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +63,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				353B1F3A1AAE147B004234C5 /* QuartzCore.framework in Frameworks */,
+				353B1F381AADD1C4004234C5 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				353B1F041AADBE39004234C5 /* LookseryAssingnment */,
+				353B1F391AAE147B004234C5 /* QuartzCore.framework */,
 				353B1F211AADBE3A004234C5 /* LookseryAssingnmentTests */,
 				353B1F031AADBE39004234C5 /* Products */,
 			);
@@ -88,11 +104,16 @@
 				353B1F0A1AADBE39004234C5 /* AppDelegate.m */,
 				353B1F0C1AADBE39004234C5 /* MasterViewController.h */,
 				353B1F0D1AADBE39004234C5 /* MasterViewController.m */,
-				353B1F0F1AADBE39004234C5 /* DetailViewController.h */,
-				353B1F101AADBE39004234C5 /* DetailViewController.m */,
+				353B1F2E1AADBFB1004234C5 /* Person.h */,
+				353B1F2F1AADBFB1004234C5 /* Person.m */,
+				353B1F311AADD13C004234C5 /* PersonsDatabase.h */,
+				353B1F321AADD13C004234C5 /* PersonsDatabase.m */,
+				353B1F0F1AADBE39004234C5 /* PersonViewController.h */,
+				353B1F101AADBE39004234C5 /* PersonViewController.m */,
 				353B1F121AADBE39004234C5 /* Main.storyboard */,
 				353B1F151AADBE39004234C5 /* Images.xcassets */,
 				353B1F171AADBE39004234C5 /* LaunchScreen.xib */,
+				353B1F371AADD1C4004234C5 /* libsqlite3.dylib */,
 				353B1F051AADBE39004234C5 /* Supporting Files */,
 			);
 			path = LookseryAssingnment;
@@ -101,6 +122,8 @@
 		353B1F051AADBE39004234C5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				353B1F341AADD175004234C5 /* sqlite3_unicode.h */,
+				353B1F351AADD175004234C5 /* sqlite3_unicode.c */,
 				353B1F061AADBE39004234C5 /* Info.plist */,
 				353B1F071AADBE39004234C5 /* main.m */,
 			);
@@ -226,8 +249,11 @@
 			files = (
 				353B1F0B1AADBE39004234C5 /* AppDelegate.m in Sources */,
 				353B1F0E1AADBE39004234C5 /* MasterViewController.m in Sources */,
+				353B1F301AADBFB1004234C5 /* Person.m in Sources */,
 				353B1F081AADBE39004234C5 /* main.m in Sources */,
-				353B1F111AADBE39004234C5 /* DetailViewController.m in Sources */,
+				353B1F361AADD175004234C5 /* sqlite3_unicode.c in Sources */,
+				353B1F331AADD13C004234C5 /* PersonsDatabase.m in Sources */,
+				353B1F111AADBE39004234C5 /* PersonViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,7 +377,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					SQLITE_CORE,
+					SQLITE_ENABLE_UNICODE,
+				);
 				INFOPLIST_FILE = LookseryAssingnment/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -361,7 +394,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					SQLITE_CORE,
+					SQLITE_ENABLE_UNICODE,
+				);
 				INFOPLIST_FILE = LookseryAssingnment/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -420,6 +458,7 @@
 				353B1F2A1AADBE3A004234C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		353B1F2B1AADBE3A004234C5 /* Build configuration list for PBXNativeTarget "LookseryAssingnmentTests" */ = {
 			isa = XCConfigurationList;
@@ -428,6 +467,7 @@
 				353B1F2D1AADBE3A004234C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

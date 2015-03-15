@@ -7,11 +7,13 @@
 //
 
 #import "MasterViewController.h"
-#import "DetailViewController.h"
+#import "PersonViewController.h"
+#import "Person.h"
+#import "PersonsDatabase.h"
 
-@interface MasterViewController ()
-
-@property NSMutableArray *objects;
+@interface MasterViewController () <PersonViewControllerDelegate> {
+    PersonsDatabase *database;
+}
 @end
 
 @implementation MasterViewController
@@ -22,16 +24,17 @@
         self.clearsSelectionOnViewWillAppear = NO;
         self.preferredContentSize = CGSizeMake(320.0, 600.0);
     }
+    database = [PersonsDatabase singleton];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    //self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
-    self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    self.detailViewController = (PersonlViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,24 +43,23 @@
 }
 
 - (void)insertNewObject:(id)sender {
-    if (!self.objects) {
-        self.objects = [[NSMutableArray alloc] init];
-    }
-    [self.objects insertObject:[NSDate date] atIndex:0];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    UINavigationController *n = (UINavigationController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"NavigationControllerWithPersonViewController"];
+    PersonViewController *personViewController = (PersonViewController*)n.topViewController;
+    personViewController.personViewControllerDelegate = self;
+    [self presentViewController:n animated:YES completion:NULL];
 }
 
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier] isEqualToString:@"showDetail"]) {
+    if ([[segue identifier] isEqualToString:@"showPerson"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDate *object = self.objects[indexPath.row];
-        DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
-        [controller setDetailItem:object];
-        controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-        controller.navigationItem.leftItemsSupplementBackButton = YES;
+        Person *person = [database personWithOffset:indexPath.row];
+        PersonViewController *controller = (PersonViewController *)[[segue destinationViewController] topViewController];
+        [controller setPerson:person];
+        controller.personViewControllerDelegate = self;
+        [controller addEditButtonAndRemoveCancelButton];
     }
 }
 
@@ -68,14 +70,14 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.objects.count;
+    return [database personsCount];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-    NSDate *object = self.objects[indexPath.row];
-    cell.textLabel.text = [object description];
+    Person *object = [database personWithOffset:indexPath.row];
+    cell.textLabel.text = [object name];
     return cell;
 }
 
@@ -84,13 +86,16 @@
     return YES;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.objects removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-    }
+#pragma mark - PersonlViewControllerDelegate
+
+- (void)personViewController:(PersonViewController*)personViewController updatePerson:(Person*)person {
+    [database updatePerson:person];
+    [self.tableView reloadData];
+}
+
+- (void)personViewController:(PersonViewController*)personViewController addPerson:(Person*)person {
+    [database addPerson:person];
+    [self.tableView reloadData];
 }
 
 @end
