@@ -132,7 +132,7 @@ int NSLogQueryResult(void *pArg, int argc, char **argv, char **columnNames){
 
     // TODO: экранирование имени
     NSString *sqlInsert = [NSString stringWithFormat:
-        @"INSERT INTO persons (name, birthday, about, isfemale) VALUES (\"%@\", %@, %@, %i ) ",
+        @"INSERT INTO persons (name, birthday, about, isfemale) VALUES (\"%@\", %@, \"%@\", %i ) ",
         person.name ?: @"NULL",
         person.birthday ? [NSString stringWithFormat:@"%f", [person.birthday timeIntervalSince1970]] : @"NULL",
         person.about ?: @"NULL",
@@ -148,7 +148,7 @@ int NSLogQueryResult(void *pArg, int argc, char **argv, char **columnNames){
    
     if (person.phones && [person.phones count] != 0) {
         for ( NSString *number in person.phones ) {
-            NSString *sqlInsertPhone = [NSString stringWithFormat:@"INSERT INTO phones (id, number) VALUES (%lli, %@) ", identifier, number];
+            NSString *sqlInsertPhone = [NSString stringWithFormat:@"INSERT INTO phones (identifier, number) VALUES (%lli, \"%@\") ", identifier, number];
             int res = sqlite3_exec(database, [sqlInsertPhone UTF8String], NULL, NULL, &errMsg);
             if (res != SQLITE_OK) {
                 NSLog(@"%s: Ошибка %s при добавлении записи в таблицу телефонов", __FUNCTION__, errMsg);
