@@ -267,8 +267,7 @@ int NSLogQueryResult(void *pArg, int argc, char **argv, char **columnNames){
     NSString *about = nil;
 
     // Таблица persons
-    // TODO: ORDER BY
-    NSString *sql = [NSMutableString stringWithFormat:@"SELECT identifier, name, birthday, about, isfemale FROM persons LIMIT 1 OFFSET %lu", offset];
+    NSString *sql = [NSMutableString stringWithFormat:@"SELECT identifier, name, birthday, about, isfemale FROM persons ORDER BY identifier LIMIT 1 OFFSET %lu", offset];
     
     sqlite3_stmt *stmt;
     int res = sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, NULL);
