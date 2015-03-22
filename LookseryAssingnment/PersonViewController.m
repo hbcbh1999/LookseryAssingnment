@@ -17,6 +17,10 @@ static NSString *kImageCell = @"image";
 const NSInteger kImageCell_imageTag = 1;
 const NSInteger kImageCell_buttonTag = 2;
 
+static NSString *kSexCell = @"sex";
+const NSInteger kSexCell_switchTag = 1;
+const NSInteger kSexCell_labelTag = 2;
+
 static NSString *kEmptyCell = @"empty";
 
 @interface PersonViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
@@ -170,6 +174,15 @@ static NSString *kEmptyCell = @"empty";
                 button.enabled = [self controlsAllowEditing];
             }
             break;
+        case 2: {
+                cell = [self.tableView dequeueReusableCellWithIdentifier:kSexCell forIndexPath:indexPath];
+                UISwitch *aswitch = (UISwitch*)[cell.contentView viewWithTag:kSexCell_switchTag];
+                aswitch.on = self.person.isFemale;
+                UILabel *l = (UILabel*)[cell.contentView viewWithTag:kSexCell_labelTag];
+                l.text = self.person.isFemale ? @"is female" : @"is male";
+                aswitch.enabled = [self controlsAllowEditing];
+            }
+            break;
         default:
             cell = [self.tableView dequeueReusableCellWithIdentifier:kEmptyCell forIndexPath:indexPath];
             break;
@@ -218,6 +231,15 @@ static NSString *kEmptyCell = @"empty";
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+#pragma mark -
+
+- (IBAction)sexSwitchChanged:(UISwitch*)sender {
+    self.person.isFemale = sender.isOn;
+    UILabel *l = (UILabel*)[sender.superview viewWithTag:kSexCell_labelTag];
+    l.text = self.person.isFemale ? @"is female" : @"is male";
+    [self setChanged:YES];
 }
 
 @end
