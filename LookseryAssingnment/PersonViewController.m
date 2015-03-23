@@ -27,6 +27,12 @@ const NSInteger kBirthdayCell_labelTag = 1;
 static NSString *kBirthdayPickerCell = @"birthday picker";
 const NSInteger kBirthdayPickerCell_pickerTag = 1;
 
+static NSString *kPhoneCell = @"phone";
+const NSInteger kPhoneCell_labelTag = 1;
+
+static NSString *kAboutCell = @"about";
+const NSInteger kAboutCell_textViewTag = 1;
+
 static NSString *kEmptyCell = @"empty";
 
 @interface PersonViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
@@ -38,6 +44,7 @@ static NSString *kEmptyCell = @"empty";
     UIResponder *controlBeingEdited;
 
     BOOL isDateOpen; // birthday cell
+    UIDatePicker *datePicker;
 }
 @end
 
@@ -147,7 +154,7 @@ static NSString *kEmptyCell = @"empty";
 #pragma mark - UITableViewDelegate и UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 6 + [self.person.phones count] - 1;
+    return 5 + (self.person.phones.count > 0 ? self.person.phones.count : 1) + 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -164,50 +171,56 @@ static NSString *kEmptyCell = @"empty";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell;
 
-    switch (indexPath.row) {
-        case 0: {
-                cell = [self.tableView dequeueReusableCellWithIdentifier:kNameCell forIndexPath:indexPath];
-                UITextField *nameTextField = (UITextField*)[cell.contentView viewWithTag:kNameCell_nameTag];
-                nameTextField.text = self.person.name;
-                nameTextField.userInteractionEnabled = [self controlsAllowEditing];
-            }
-            break;
-        case 1: {
-                cell = [self.tableView dequeueReusableCellWithIdentifier:kImageCell forIndexPath:indexPath];
-                UIImageView *imageView = (UIImageView*)[cell.contentView viewWithTag:kImageCell_imageTag];
-                // TODO: почему-то упрямо не хочет устанавливать это в IB
-                imageView.layer.borderColor = [[UIColor blackColor] CGColor];
-                imageView.layer.borderWidth = 1.0;
-                imageView.layer.cornerRadius = 5.0;
-                imageView.image = self.person.image;
-                UIButton *button = (UIButton*)[cell.contentView viewWithTag:kImageCell_buttonTag];
-                button.enabled = [self controlsAllowEditing];
-            }
-            break;
-        case 2: {
-                cell = [self.tableView dequeueReusableCellWithIdentifier:kSexCell forIndexPath:indexPath];
-                UISwitch *aswitch = (UISwitch*)[cell.contentView viewWithTag:kSexCell_switchTag];
-                aswitch.on = self.person.isFemale;
-                UILabel *l = (UILabel*)[cell.contentView viewWithTag:kSexCell_labelTag];
-                l.text = self.person.isFemale ? @"is female" : @"is male";
-                aswitch.enabled = [self controlsAllowEditing];
-            }
-            break;
-        case 3: {
-                cell = [self.tableView dequeueReusableCellWithIdentifier:kBirthdayCell forIndexPath:indexPath];
-                UILabel *l = (UILabel*)[cell.contentView viewWithTag:kBirthdayCell_labelTag];
-                l.text = [self birthdayStringFromDate:self.person.birthday];
-            }
-            break;
-        case 4: {
-                cell = [self.tableView dequeueReusableCellWithIdentifier:kBirthdayPickerCell forIndexPath:indexPath];
-                UIDatePicker *p = (UIDatePicker*)[cell.contentView viewWithTag:kBirthdayPickerCell_pickerTag];
-                p.date = self.person.birthday;
-            }
-            break;
-        default:
-            cell = [self.tableView dequeueReusableCellWithIdentifier:kEmptyCell forIndexPath:indexPath];
-            break;
+    // Вот здесь switch из swift развернулся бы во всей красе!..
+    if (indexPath.row == 0) {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:kNameCell forIndexPath:indexPath];
+        UITextField *nameTextField = (UITextField*)[cell.contentView viewWithTag:kNameCell_nameTag];
+        nameTextField.text = self.person.name;
+        nameTextField.userInteractionEnabled = [self controlsAllowEditing];
+    } else if (indexPath.row == 1) {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:kImageCell forIndexPath:indexPath];
+        UIImageView *imageView = (UIImageView*)[cell.contentView viewWithTag:kImageCell_imageTag];
+        // TODO: почему-то упрямо не хочет устанавливать это в IB
+        imageView.layer.borderColor = [[UIColor blackColor] CGColor];
+        imageView.layer.borderWidth = 1.0;
+        imageView.layer.cornerRadius = 5.0;
+        imageView.image = self.person.image;
+        UIButton *button = (UIButton*)[cell.contentView viewWithTag:kImageCell_buttonTag];
+        button.enabled = [self controlsAllowEditing];
+    } else if (indexPath.row == 2) {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:kSexCell forIndexPath:indexPath];
+        UISwitch *aswitch = (UISwitch*)[cell.contentView viewWithTag:kSexCell_switchTag];
+        aswitch.on = self.person.isFemale;
+        UILabel *l = (UILabel*)[cell.contentView viewWithTag:kSexCell_labelTag];
+        l.text = self.person.isFemale ? @"is female" : @"is male";
+        aswitch.enabled = [self controlsAllowEditing];
+    }  if (indexPath.row == 3) {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:kBirthdayCell forIndexPath:indexPath];
+        UILabel *l = (UILabel*)[cell.contentView viewWithTag:kBirthdayCell_labelTag];
+        l.text = [self birthdayStringFromDate:self.person.birthday];
+    }  if (indexPath.row == 4) {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:kBirthdayPickerCell forIndexPath:indexPath];
+        datePicker = (UIDatePicker*)[cell.contentView viewWithTag:kBirthdayPickerCell_pickerTag];
+        if (self.person.birthday != nil) {
+            datePicker.date = self.person.birthday;
+        }
+        datePicker.enabled = isDateOpen;
+        datePicker.alpha = isDateOpen ? 1.0 : 0.0;
+    } if ((indexPath.row > 4) && (indexPath.row <= 4 + (self.person.phones.count > 0 ? self.person.phones.count : 1))) {
+        // Когда телефонов нет все равно под телефон должна быть одна ячейка
+        cell = [self.tableView dequeueReusableCellWithIdentifier:kPhoneCell forIndexPath:indexPath];
+        UILabel *l = (UILabel*)[cell.contentView viewWithTag:kPhoneCell_labelTag];
+        if (self.person.phones.count != 0 ) {
+            NSInteger phoneIndex = indexPath.row - 4 - 1;
+            l.text = self.person.phones[phoneIndex];
+        } else {
+            l.text = @"Phone not set";
+        }
+    } else if (indexPath.row == 4 + (self.person.phones.count > 0 ? self.person.phones.count : 1) + 1) {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:kAboutCell forIndexPath:indexPath];
+        cell.textLabel.text = @"Тут будет about";
+    } else {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:kEmptyCell forIndexPath:indexPath];
     }
     
     return cell;
@@ -218,12 +231,41 @@ static NSString *kEmptyCell = @"empty";
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [tableView beginUpdates];
-    if (indexPath.row == 3) {
-        isDateOpen = !isDateOpen;
+    if (indexPath.row == 3){
+        if (isDateOpen) {
+            [self hideDatePickerCell];
+        } else {
+            [self showDatePickerCell];
+        }
     }
-    [tableView reloadData];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)showDatePickerCell {
+    isDateOpen = YES;
+    [self.tableView beginUpdates];
     [self.tableView endUpdates];
+    datePicker.hidden = NO;
+    datePicker.alpha = 0.0f;
+    [UIView animateWithDuration:0.25 animations:^{
+        datePicker.alpha = 1.0f;
+    } completion:^(BOOL finished) {
+        //datePicker.superview.superview.clipsToBounds = NO;
+        datePicker.enabled = YES;
+    }];
+}
+
+- (void)hideDatePickerCell {
+    isDateOpen = NO;
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+    [UIView animateWithDuration:0.25 animations:^{
+        datePicker.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        datePicker.hidden = YES;
+        datePicker.enabled = NO;
+        //datePicker.superview.superview.clipsToBounds = YES;
+    }];
 }
 
 #pragma mark - UITextFieldDelegate

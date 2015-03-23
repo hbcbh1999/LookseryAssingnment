@@ -220,27 +220,49 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="birthday picker" rowHeight="219" id="d6a-aU-OkE">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="birthday picker" rowHeight="219" id="d6a-aU-OkE">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d6a-aU-OkE" id="44q-Ai-7EV">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="8C7-8j-xax">
-                                            <rect key="frame" x="0.0" y="1.5" width="600" height="216"/>
-                                            <date key="date" timeIntervalSinceReferenceDate="448754401.69609898">
-                                                <!--2015-03-22 22:00:01 +0000-->
+                                        <datePicker tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="rUR-hm-bYH">
+                                            <rect key="frame" x="140" y="8" width="320" height="162"/>
+                                            <date key="date" timeIntervalSinceReferenceDate="448813172.186068">
+                                                <!--2015-03-23 14:19:32 +0000-->
                                             </date>
                                             <connections>
-                                                <action selector="datePickerChanged:" destination="qw4-io-P0E" eventType="valueChanged" id="DIJ-WO-liT"/>
+                                                <action selector="datePickerChanged:" destination="qw4-io-P0E" eventType="valueChanged" id="hNn-i3-SCj"/>
                                             </connections>
                                         </datePicker>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="8C7-8j-xax" firstAttribute="top" secondItem="44q-Ai-7EV" secondAttribute="top" id="OCf-xU-eQ8"/>
-                                        <constraint firstAttribute="bottom" secondItem="8C7-8j-xax" secondAttribute="bottom" id="ZHi-We-F99"/>
-                                        <constraint firstAttribute="trailing" secondItem="8C7-8j-xax" secondAttribute="trailing" id="cnJ-Kz-XDy"/>
-                                        <constraint firstItem="8C7-8j-xax" firstAttribute="leading" secondItem="44q-Ai-7EV" secondAttribute="leading" id="vna-o8-NrV"/>
+                                        <constraint firstItem="rUR-hm-bYH" firstAttribute="top" secondItem="44q-Ai-7EV" secondAttribute="topMargin" id="264-UF-SZZ"/>
+                                        <constraint firstItem="rUR-hm-bYH" firstAttribute="centerX" secondItem="44q-Ai-7EV" secondAttribute="centerX" id="KEN-QD-zyl"/>
                                     </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="phone" id="E8p-Mb-V89">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E8p-Mb-V89" id="l2k-sM-xiY">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uma-GO-CCq">
+                                            <rect key="frame" x="8" y="11" width="50" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="centerY" secondItem="uma-GO-CCq" secondAttribute="centerY" constant="0.25" id="NVc-Qs-JHK"/>
+                                        <constraint firstItem="uma-GO-CCq" firstAttribute="leading" secondItem="l2k-sM-xiY" secondAttribute="leadingMargin" id="rEg-xL-Xha"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="about" id="vxc-aW-Wb1">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vxc-aW-Wb1" id="vEU-Ik-1rE">
+                                    <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
