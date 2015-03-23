@@ -21,6 +21,12 @@ static NSString *kSexCell = @"sex";
 const NSInteger kSexCell_switchTag = 1;
 const NSInteger kSexCell_labelTag = 2;
 
+static NSString *kBirthdayCell = @"birthday";
+const NSInteger kBirthdayCell_labelTag = 1;
+
+static NSString *kBirthdayPickerCell = @"birthday picker";
+const NSInteger kBirthdayPickerCell_pickerTag = 1;
+
 static NSString *kEmptyCell = @"empty";
 
 @interface PersonViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
@@ -30,6 +36,8 @@ static NSString *kEmptyCell = @"empty";
     // Если будет нажата кнопка done, редактирование этого контрола надо завершить насильно,
     // чтоб дать отработать делегатам которые сохранят данные.
     UIResponder *controlBeingEdited;
+
+    BOOL isDateOpen; // birthday cell
 }
 @end
 
@@ -144,8 +152,10 @@ static NSString *kEmptyCell = @"empty";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.row) {
-        case 1:
+        case 1: // image
             return 100;
+        case 4: // picker for birthday
+            return isDateOpen ? 219 : 0;
         default:
             return 44;
     }
@@ -183,6 +193,18 @@ static NSString *kEmptyCell = @"empty";
                 aswitch.enabled = [self controlsAllowEditing];
             }
             break;
+        case 3: {
+                cell = [self.tableView dequeueReusableCellWithIdentifier:kBirthdayCell forIndexPath:indexPath];
+                UILabel *l = (UILabel*)[cell.contentView viewWithTag:kBirthdayCell_labelTag];
+                l.text = [self birthdayStringFromDate:self.person.birthday];
+            }
+            break;
+        case 4: {
+                cell = [self.tableView dequeueReusableCellWithIdentifier:kBirthdayPickerCell forIndexPath:indexPath];
+                UIDatePicker *p = (UIDatePicker*)[cell.contentView viewWithTag:kBirthdayPickerCell_pickerTag];
+                p.date = self.person.birthday;
+            }
+            break;
         default:
             cell = [self.tableView dequeueReusableCellWithIdentifier:kEmptyCell forIndexPath:indexPath];
             break;
@@ -193,6 +215,15 @@ static NSString *kEmptyCell = @"empty";
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     return self.editMode ? indexPath : nil;
+}
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView beginUpdates];
+    if (indexPath.row == 3) {
+        isDateOpen = !isDateOpen;
+    }
+    [tableView reloadData];
+    [self.tableView endUpdates];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -242,4 +273,22 @@ static NSString *kEmptyCell = @"empty";
     [self setChanged:YES];
 }
 
+#pragma mark -
+
+- (IBAction)datePickerChanged:(UIDatePicker*)sender {
+    self.person.birthday = sender.date;
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
+    UILabel *l = (UILabel*)[cell.contentView viewWithTag:kBirthdayCell_labelTag];
+    l.text = [self birthdayStringFromDate:sender.date];
+    [self setChanged:YES];
+}
+
+#pragma mark -
+
+// Helper
+- (NSString*)birthdayStringFromDate:(NSDate*)date {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"dd MM yyyy"];
+    return [NSString stringWithFormat:@"Birthday %@", [formatter stringFromDate:self.person.birthday] ?: @"not set"];
+}
 @end

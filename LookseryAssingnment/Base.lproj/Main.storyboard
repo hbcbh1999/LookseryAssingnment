@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RMx-3f-FxP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RMx-3f-FxP">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -199,6 +199,47 @@
                                         <constraint firstItem="iLv-Tb-qgG" firstAttribute="leading" secondItem="7wv-69-eBZ" secondAttribute="trailing" constant="21" id="WRv-jK-1rO"/>
                                         <constraint firstItem="hav-yj-YEU" firstAttribute="leading" secondItem="dcb-eF-1nm" secondAttribute="leadingMargin" id="aNu-fG-7D4"/>
                                         <constraint firstAttribute="centerY" secondItem="hav-yj-YEU" secondAttribute="centerY" constant="0.25" id="egg-ve-3gz"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="birthday" rowHeight="100" id="1Wr-jM-csQ">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1Wr-jM-csQ" id="PuQ-sz-fMd">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Birthday label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xV7-U7-XoD">
+                                            <rect key="frame" x="8" y="39.5" width="105.5" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="centerY" secondItem="xV7-U7-XoD" secondAttribute="centerY" constant="0.25" id="5Kl-CD-dyK"/>
+                                        <constraint firstItem="xV7-U7-XoD" firstAttribute="leading" secondItem="PuQ-sz-fMd" secondAttribute="leadingMargin" id="YlN-TC-ugw"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="birthday picker" rowHeight="219" id="d6a-aU-OkE">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d6a-aU-OkE" id="44q-Ai-7EV">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="8C7-8j-xax">
+                                            <rect key="frame" x="0.0" y="1.5" width="600" height="216"/>
+                                            <date key="date" timeIntervalSinceReferenceDate="448754401.69609898">
+                                                <!--2015-03-22 22:00:01 +0000-->
+                                            </date>
+                                            <connections>
+                                                <action selector="datePickerChanged:" destination="qw4-io-P0E" eventType="valueChanged" id="DIJ-WO-liT"/>
+                                            </connections>
+                                        </datePicker>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="8C7-8j-xax" firstAttribute="top" secondItem="44q-Ai-7EV" secondAttribute="top" id="OCf-xU-eQ8"/>
+                                        <constraint firstAttribute="bottom" secondItem="8C7-8j-xax" secondAttribute="bottom" id="ZHi-We-F99"/>
+                                        <constraint firstAttribute="trailing" secondItem="8C7-8j-xax" secondAttribute="trailing" id="cnJ-Kz-XDy"/>
+                                        <constraint firstItem="8C7-8j-xax" firstAttribute="leading" secondItem="44q-Ai-7EV" secondAttribute="leading" id="vna-o8-NrV"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
