@@ -237,7 +237,7 @@ static NSString *kEmptyCell = @"empty";
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.editMode ? indexPath : nil;
+    return self.editMode | self.person.isNewRecord ? indexPath : nil;
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
