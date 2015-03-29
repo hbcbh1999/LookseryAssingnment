@@ -170,14 +170,17 @@ static NSString *kEmptyCell = @"empty";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell;
+    NSLog(@"indexPath.row = %ld", indexPath.row);
 
     // Вот здесь switch из swift развернулся бы во всей красе!..
     if (indexPath.row == 0) {
+        NSLog(@"Сделали ячейку с именем");
         cell = [self.tableView dequeueReusableCellWithIdentifier:kNameCell forIndexPath:indexPath];
         UITextField *nameTextField = (UITextField*)[cell.contentView viewWithTag:kNameCell_nameTag];
         nameTextField.text = self.person.name;
         nameTextField.userInteractionEnabled = [self controlsAllowEditing];
     } else if (indexPath.row == 1) {
+        NSLog(@"Сделали ячейку с картинкой");
         cell = [self.tableView dequeueReusableCellWithIdentifier:kImageCell forIndexPath:indexPath];
         UIImageView *imageView = (UIImageView*)[cell.contentView viewWithTag:kImageCell_imageTag];
         // TODO: почему-то упрямо не хочет устанавливать это в IB
@@ -188,17 +191,20 @@ static NSString *kEmptyCell = @"empty";
         UIButton *button = (UIButton*)[cell.contentView viewWithTag:kImageCell_buttonTag];
         button.enabled = [self controlsAllowEditing];
     } else if (indexPath.row == 2) {
+        NSLog(@"Сделали ячейку с полом");
         cell = [self.tableView dequeueReusableCellWithIdentifier:kSexCell forIndexPath:indexPath];
         UISwitch *aswitch = (UISwitch*)[cell.contentView viewWithTag:kSexCell_switchTag];
         aswitch.on = self.person.isFemale;
         UILabel *l = (UILabel*)[cell.contentView viewWithTag:kSexCell_labelTag];
         l.text = self.person.isFemale ? @"is female" : @"is male";
         aswitch.enabled = [self controlsAllowEditing];
-    }  if (indexPath.row == 3) {
+    }  else if (indexPath.row == 3) {
+        NSLog(@"Сделали ячейку с датой рождения");
         cell = [self.tableView dequeueReusableCellWithIdentifier:kBirthdayCell forIndexPath:indexPath];
         UILabel *l = (UILabel*)[cell.contentView viewWithTag:kBirthdayCell_labelTag];
         l.text = [self birthdayStringFromDate:self.person.birthday];
-    }  if (indexPath.row == 4) {
+    }  else if (indexPath.row == 4) {
+        NSLog(@"Сделали ячейку с пикером даты");
         cell = [self.tableView dequeueReusableCellWithIdentifier:kBirthdayPickerCell forIndexPath:indexPath];
         datePicker = (UIDatePicker*)[cell.contentView viewWithTag:kBirthdayPickerCell_pickerTag];
         if (self.person.birthday != nil) {
@@ -206,7 +212,8 @@ static NSString *kEmptyCell = @"empty";
         }
         datePicker.enabled = isDateOpen;
         datePicker.alpha = isDateOpen ? 1.0 : 0.0;
-    } if ((indexPath.row > 4) && (indexPath.row <= 4 + (self.person.phones.count > 0 ? self.person.phones.count : 1))) {
+    } else if ((indexPath.row > 4) && (indexPath.row <= 4 + (self.person.phones.count > 0 ? self.person.phones.count : 1))) {
+        NSLog(@"Сделали ячейку с телефоном");
         // Когда телефонов нет все равно под телефон должна быть одна ячейка
         cell = [self.tableView dequeueReusableCellWithIdentifier:kPhoneCell forIndexPath:indexPath];
         UILabel *l = (UILabel*)[cell.contentView viewWithTag:kPhoneCell_labelTag];
@@ -217,10 +224,13 @@ static NSString *kEmptyCell = @"empty";
             l.text = @"Phone not set";
         }
     } else if (indexPath.row == 4 + (self.person.phones.count > 0 ? self.person.phones.count : 1) + 1) {
+        NSLog(@"Сделали ячейку about");
         cell = [self.tableView dequeueReusableCellWithIdentifier:kAboutCell forIndexPath:indexPath];
         cell.textLabel.text = @"Тут будет about";
     } else {
+        NSLog(@"Сделали пустую ячейку");
         cell = [self.tableView dequeueReusableCellWithIdentifier:kEmptyCell forIndexPath:indexPath];
+        cell.backgroundColor = [UIColor redColor];
     }
     
     return cell;
