@@ -10,6 +10,8 @@
 #import "PersonsDatabase.h"
 #import <QuartzCore/QuartzCore.h>
 
+#define colorToHighlightHashtags [UIColor redColor]
+
 static NSString *kNameCell = @"name";
 const NSInteger kNameCell_nameTag = 1;
 
@@ -428,6 +430,15 @@ const CGFloat kTextViewVerticalPadding = 8;
 }
 
 - (void) textViewDidChange:(UITextView *)textView {
+    NSString *text = textView.text;
+    NSRange range = NSMakeRange(0, text.length);
+
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"#(\\w+)" options:0 error:nil];
+    [regex enumerateMatchesInString:textView.text options:0 range:range usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+        [attributedText addAttribute:NSForegroundColorAttributeName value:colorToHighlightHashtags range:result.range];
+    }];
+    textView.attributedText = attributedText;
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
 
