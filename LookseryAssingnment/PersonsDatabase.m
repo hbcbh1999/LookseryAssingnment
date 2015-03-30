@@ -205,7 +205,7 @@ int NSLogQueryResult(void *pArg, int argc, char **argv, char **columnNames){
             return NO;
         }
         for ( NSString *number in person.phones ) {
-            NSString *sqlInsertPhone = [NSString stringWithFormat:@"INSERT INTO phones (identifier, \"number\") VALUES (%ld, %@)", person.identifier, number];
+            NSString *sqlInsertPhone = [NSString stringWithFormat:@"INSERT INTO phones (identifier, number) VALUES (%ld, \"%@\")", person.identifier, number];
             int res = sqlite3_exec(database, [sqlInsertPhone UTF8String], NULL, NULL, &errMsg);
             if (res != SQLITE_OK) {
                 NSLog(@"%s: Ошибка %s при добавлении записи в таблицу телефонов", __FUNCTION__, errMsg);
