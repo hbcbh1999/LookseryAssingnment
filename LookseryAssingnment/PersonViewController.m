@@ -315,7 +315,7 @@ const CGFloat kTextViewVerticalPadding = 8;
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     [textField resignFirstResponder];
     // UITextField используется для ввода имени и телефонов.
-    // Как-то нужно разбираться где именно сохранять то что юхер наредактировал,
+    // Как-то нужно разбираться где именно сохранять то что юзер наредактировал,
     // при этом нужно различать имя от телефонов, а для телефона понимать какой именно это телефон.
     // Поле tag у textField уже занято и используется в cellForRowAtIndexPath.
     // tag у contentView ячейки свободе. textField.superview это и есть contentView.
@@ -337,6 +337,19 @@ const CGFloat kTextViewVerticalPadding = 8;
             }
         }
     }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)replacementText {
+    UIView *contentView = textField.superview;
+    if (contentView != nil && contentView.tag != NSIntegerMax) {
+        // Это телефон. Проверим на разрешенные символы
+        NSString *textAfterChange = [textField.text stringByReplacingCharactersInRange:range withString:replacementText];
+        NSCharacterSet *allowedCharacters = [NSCharacterSet characterSetWithCharactersInString:@"01234567890 -()"]; // Вообще-то, буквы в телефонах разрешены
+        NSCharacterSet *notAllowedCharacters = [allowedCharacters invertedSet]; // TODO: создать один раз для оптимизации
+        NSRange r = [textAfterChange rangeOfCharacterFromSet:notAllowedCharacters];
+        return r.location == NSNotFound;
+    }
+    return YES;
 }
 
 #pragma mark - UIImagePickerControllerDelegate
