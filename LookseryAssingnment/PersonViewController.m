@@ -11,6 +11,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #define colorToHighlightHashtags [UIColor redColor]
+const NSUInteger maxAboutLength = 256;
 
 static NSString *kNameCell = @"name";
 const NSInteger kNameCell_nameTag = 1;
@@ -36,6 +37,7 @@ const NSInteger kPhoneCell_removeButtonTag = 3;
 
 static NSString *kAboutCell = @"about";
 const NSInteger kAboutCell_textViewTag = 1;
+const NSInteger kAboutCell_warningLabelTag = 2;
 
 static NSString *kEmptyCell = @"empty";
 
@@ -445,6 +447,23 @@ const CGFloat kTextViewVerticalPadding = 8;
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
 
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)replacementText {
+    NSString *textAfterChange = [textView.text stringByReplacingCharactersInRange:range withString:replacementText];
+    UILabel *warningLabel = (UILabel*)[textView.superview.superview viewWithTag:kAboutCell_warningLabelTag];
+    warningLabel.text = [NSString stringWithFormat:@"Max lenght of about feild is %ld characters", maxAboutLength];
+    if (textAfterChange.length > maxAboutLength) {
+        [UIView animateWithDuration:1.0 animations:^{
+            warningLabel.alpha = 1.0;
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.1 animations:^{
+                warningLabel.alpha = 0.0;
+            }];
+        }];
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark -

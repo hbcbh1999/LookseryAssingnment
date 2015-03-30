@@ -300,10 +300,18 @@
                                                 <outlet property="delegate" destination="qw4-io-P0E" id="WN0-eH-oe8"/>
                                             </connections>
                                         </textView>
+                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Max Max Max Max" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fP1-Je-C00">
+                                            <rect key="frame" x="255.5" y="8" width="89" height="12"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                            <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottomMargin" secondItem="N8b-gH-aVv" secondAttribute="bottom" id="Grh-z9-Lph"/>
+                                        <constraint firstAttribute="centerX" secondItem="fP1-Je-C00" secondAttribute="centerX" id="Q1G-fB-efL"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="N8b-gH-aVv" secondAttribute="trailing" id="Umm-rR-K0j"/>
+                                        <constraint firstItem="fP1-Je-C00" firstAttribute="top" secondItem="vEU-Ik-1rE" secondAttribute="topMargin" id="fbi-hC-R9g"/>
                                         <constraint firstItem="N8b-gH-aVv" firstAttribute="top" secondItem="vEU-Ik-1rE" secondAttribute="topMargin" id="jXe-aA-n8a"/>
                                         <constraint firstItem="N8b-gH-aVv" firstAttribute="leading" secondItem="vEU-Ik-1rE" secondAttribute="leadingMargin" id="wmO-J6-biZ"/>
                                     </constraints>
