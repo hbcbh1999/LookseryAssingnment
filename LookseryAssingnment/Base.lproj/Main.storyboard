@@ -284,6 +284,29 @@
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vxc-aW-Wb1" id="vEU-Ik-1rE">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" text="Lorem ipsum dolor sit er elit lamet gdfghdfh ghjfghj hgjfgjh jghghj ghj ghj ghj ghj" translatesAutoresizingMaskIntoConstraints="NO" id="N8b-gH-aVv" customClass="UITextViewWithPlaceholder">
+                                            <rect key="frame" x="8" y="8" width="584" height="27.5"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="about"/>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                    <color key="value" red="0.60000002384185791" green="0.60000002384185791" blue="0.60000002384185791" alpha="1" colorSpace="calibratedRGB"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <outlet property="delegate" destination="qw4-io-P0E" id="WN0-eH-oe8"/>
+                                            </connections>
+                                        </textView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="N8b-gH-aVv" secondAttribute="bottom" id="Grh-z9-Lph"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="N8b-gH-aVv" secondAttribute="trailing" id="Umm-rR-K0j"/>
+                                        <constraint firstItem="N8b-gH-aVv" firstAttribute="top" secondItem="vEU-Ik-1rE" secondAttribute="topMargin" id="jXe-aA-n8a"/>
+                                        <constraint firstItem="N8b-gH-aVv" firstAttribute="leading" secondItem="vEU-Ik-1rE" secondAttribute="leadingMargin" id="wmO-J6-biZ"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>

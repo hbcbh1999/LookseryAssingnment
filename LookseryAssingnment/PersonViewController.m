@@ -37,6 +37,9 @@ const NSInteger kAboutCell_textViewTag = 1;
 
 static NSString *kEmptyCell = @"empty";
 
+const CGFloat kTextViewHorizontalPadding = 12;
+const CGFloat kTextViewVerticalPadding = 8;
+
 @interface PersonViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
     UITableViewCell *cellWithImage;
 
@@ -47,6 +50,8 @@ static NSString *kEmptyCell = @"empty";
 
     BOOL isDateOpen; // birthday cell
     UIDatePicker *datePicker;
+
+    UITextView *aboutTextView; // about cell
 }
 @end
 
@@ -160,13 +165,15 @@ static NSString *kEmptyCell = @"empty";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.row) {
-        case 1: // image
-            return 100;
-        case 4: // picker for birthday
-            return isDateOpen ? 219 : 0;
-        default:
-            return 44;
+    NSLog(@"heightForRowAtIndexPath: %ld:%ld", indexPath.section, indexPath.row);
+    if (indexPath.row ==  1) { // image
+        return 100;
+    } else if (indexPath.row == 4) { // picker for birthday
+        return isDateOpen ? 219 : 0;
+    } else if (indexPath.row == 4 + (self.person.phones.count > 0 ? self.person.phones.count : 1) + 1) { // about
+        return [self heightForTextView:aboutTextView] + 8 /* небольшой отступ */;
+    } else {
+        return 44;
     }
 }
 
@@ -239,7 +246,10 @@ static NSString *kEmptyCell = @"empty";
     } else if (indexPath.row == 4 + (self.person.phones.count > 0 ? self.person.phones.count : 1) + 1) {
         NSLog(@"Сделали ячейку about");
         cell = [self.tableView dequeueReusableCellWithIdentifier:kAboutCell forIndexPath:indexPath];
-        cell.textLabel.text = @"Тут будет about";
+        aboutTextView = (UITextView*)[cell.contentView viewWithTag:kAboutCell_textViewTag];
+        aboutTextView.text = self.person.about;
+        aboutTextView.contentSize = CGSizeMake(aboutTextView.bounds.size.width, [self heightForTextView:aboutTextView]);
+        aboutTextView.userInteractionEnabled = [self controlsAllowEditing];
     } else {
         NSLog(@"Сделали пустую ячейку");
         cell = [self.tableView dequeueReusableCellWithIdentifier:kEmptyCell forIndexPath:indexPath];
@@ -402,6 +412,33 @@ static NSString *kEmptyCell = @"empty";
     self.person.phones = [array copy];
     [self setChanged:YES];
     [self.tableView reloadData];
+}
+
+#pragma mark - UITextViewDelegate
+
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    [self setChanged:YES];
+    controlBeingEdited = textView;
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    [textView resignFirstResponder];
+    self.person.about = textView.text;
+    self.changed = YES;
+}
+
+- (void) textViewDidChange:(UITextView *)textView {
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+
+}
+
+#pragma mark -
+
+- (CGFloat)heightForTextView:(UITextView*)textView {
+    float widthOfTextView = textView.contentSize.width - kTextViewHorizontalPadding*2;
+    float height = [textView.text sizeWithFont:textView.font constrainedToSize:CGSizeMake(widthOfTextView, INFINITY) lineBreakMode:NSLineBreakByWordWrapping].height + kTextViewVerticalPadding*2;
+    return height;
 }
 
 @end
