@@ -430,6 +430,7 @@ const CGFloat kTextViewVerticalPadding = 8;
 }
 
 - (void) textViewDidChange:(UITextView *)textView {
+    // Подсвечивание хештегов
     NSString *text = textView.text;
     NSRange range = NSMakeRange(0, text.length);
 
@@ -439,6 +440,8 @@ const CGFloat kTextViewVerticalPadding = 8;
         [attributedText addAttribute:NSForegroundColorAttributeName value:colorToHighlightHashtags range:result.range];
     }];
     textView.attributedText = attributedText;
+
+    // Для того чтоб высота ячейки менялась
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
 
