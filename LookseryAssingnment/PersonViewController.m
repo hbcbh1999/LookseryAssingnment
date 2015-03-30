@@ -7,8 +7,8 @@
 //
 
 #import "PersonViewController.h"
-#import <QuartzCore/QuartzCore.h>
 #import "PersonsDatabase.h"
+#import <QuartzCore/QuartzCore.h>
 
 static NSString *kNameCell = @"name";
 const NSInteger kNameCell_nameTag = 1;
@@ -28,7 +28,9 @@ static NSString *kBirthdayPickerCell = @"birthday picker";
 const NSInteger kBirthdayPickerCell_pickerTag = 1;
 
 static NSString *kPhoneCell = @"phone";
-const NSInteger kPhoneCell_labelTag = 1;
+const NSInteger kPhoneCell_phoneTag = 1;
+const NSInteger kPhoneCell_addButtonTag = 2;
+const NSInteger kPhoneCell_removeButtonTag = 3;
 
 static NSString *kAboutCell = @"about";
 const NSInteger kAboutCell_textViewTag = 1;
@@ -176,8 +178,12 @@ static NSString *kEmptyCell = @"empty";
     if (indexPath.row == 0) {
         NSLog(@"Сделали ячейку с именем");
         cell = [self.tableView dequeueReusableCellWithIdentifier:kNameCell forIndexPath:indexPath];
+        // Здесь задействован и cell.contentView.tag, но можно не париться с исключением его из поиска так
+        // как cell.contentView.tag == NSIntegerMax и вероятность совпадения с используемыми тагами нулевая.
+        // Да, пока здесь используется один kNameCell_nameTag, но по мере развития программы может быть и больше.
         UITextField *nameTextField = (UITextField*)[cell.contentView viewWithTag:kNameCell_nameTag];
         nameTextField.text = self.person.name;
+        cell.contentView.tag = NSIntegerMax; // см. комментарий в textFieldDidEndEditing:
         nameTextField.userInteractionEnabled = [self controlsAllowEditing];
     } else if (indexPath.row == 1) {
         NSLog(@"Сделали ячейку с картинкой");
@@ -216,13 +222,20 @@ static NSString *kEmptyCell = @"empty";
         NSLog(@"Сделали ячейку с телефоном");
         // Когда телефонов нет все равно под телефон должна быть одна ячейка
         cell = [self.tableView dequeueReusableCellWithIdentifier:kPhoneCell forIndexPath:indexPath];
-        UILabel *l = (UILabel*)[cell.contentView viewWithTag:kPhoneCell_labelTag];
-        if (self.person.phones.count != 0 ) {
-            NSInteger phoneIndex = indexPath.row - 4 - 1;
-            l.text = self.person.phones[phoneIndex];
-        } else {
-            l.text = @"Phone not set";
+        // Здесь нужно быть внимательным с выбором ячейки по tag, так как задействован и cell.contentView.tag.
+        // Нужно исключить его из поиска.
+        UITextField *ph = (UITextField*)[[cell.contentView.subviews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"tag=%d", kPhoneCell_phoneTag]] firstObject];
+        ph.userInteractionEnabled = [self controlsAllowEditing];
+        UIButton *addButton = (UIButton*)[[cell.contentView.subviews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"tag=%d", kPhoneCell_addButtonTag]] firstObject];
+        UIButton *removeButton = (UIButton*)[[cell.contentView.subviews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"tag=%d", kPhoneCell_removeButtonTag]] firstObject];
+        addButton.enabled = [self controlsAllowEditing];
+        removeButton.enabled = [self controlsAllowEditing];
+        if (self.person.phones.count == 0 ) {
+            self.person.phones = [NSArray arrayWithObject:@""];
         }
+        NSInteger phoneIndex = indexPath.row - 4 - 1;
+        ph.text = self.person.phones[phoneIndex];
+        cell.contentView.tag = phoneIndex; // см. комментарий в textFieldDidEndEditing:
     } else if (indexPath.row == 4 + (self.person.phones.count > 0 ? self.person.phones.count : 1) + 1) {
         NSLog(@"Сделали ячейку about");
         cell = [self.tableView dequeueReusableCellWithIdentifier:kAboutCell forIndexPath:indexPath];
@@ -287,8 +300,29 @@ static NSString *kEmptyCell = @"empty";
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     [textField resignFirstResponder];
-    self.person.name = textField.text;
-    self.changed = YES;
+    // UITextField используется для ввода имени и телефонов.
+    // Как-то нужно разбираться где именно сохранять то что юхер наредактировал,
+    // при этом нужно различать имя от телефонов, а для телефона понимать какой именно это телефон.
+    // Поле tag у textField уже занято и используется в cellForRowAtIndexPath.
+    // tag у contentView ячейки свободе. textField.superview это и есть contentView.
+    UIView *contentView = textField.superview;
+    if (contentView!=nil) {
+        if (contentView.tag == NSIntegerMax) {
+            // Это имя
+            self.person.name = textField.text;
+        } else {
+            // Это телефон и tag равен индексу телефона в массиве
+            NSInteger index = contentView.tag;
+            if (index < [self.person.phones count]) {
+                NSMutableArray *array = [self.person.phones mutableCopy];
+                array[index] = textField.text;
+                self.person.phones = [array copy];
+                self.changed = YES;
+            } else {
+                NSLog(@"%s: нарушена внутренняя логика, index выходит за пределы массива телефонов", __FUNCTION__);
+            }
+        }
+    }
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -343,4 +377,31 @@ static NSString *kEmptyCell = @"empty";
     [formatter setDateFormat:@"dd MM yyyy"];
     return [NSString stringWithFormat:@"Birthday %@", [formatter stringFromDate:self.person.birthday] ?: @"not set"];
 }
+
+#pragma mark -
+
+- (IBAction)addPhone:(UIButton*)sender {
+    NSLog(@"add");
+    NSMutableArray *array;
+    if (self.person.phones == nil || [self.person.phones count] == 0) {
+        array = [NSMutableArray arrayWithObject:@""];
+    } else {
+        array = [self.person.phones mutableCopy];
+    }
+    [array addObject:@""];
+    self.person.phones = array;
+    [self setChanged:YES];
+    [self.tableView reloadData];
+}
+
+- (IBAction)removePhone:(UIButton*)sender {
+    NSLog(@"remove");
+    NSInteger index = sender.superview.tag;
+    NSMutableArray *array = [self.person.phones mutableCopy];
+    [array removeObjectAtIndex:index];
+    self.person.phones = [array copy];
+    [self setChanged:YES];
+    [self.tableView reloadData];
+}
+
 @end

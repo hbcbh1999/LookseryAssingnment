@@ -246,16 +246,37 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E8p-Mb-V89" id="l2k-sM-xiY">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uma-GO-CCq">
-                                            <rect key="frame" x="8" y="11" width="50" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y3s-ye-rlt">
+                                            <rect key="frame" x="570" y="11" width="22" height="22"/>
+                                            <state key="normal" image="plus"/>
+                                            <connections>
+                                                <action selector="addPhone:" destination="qw4-io-P0E" eventType="touchUpInside" id="Adk-Em-1AD"/>
+                                            </connections>
+                                        </button>
+                                        <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="phone" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9oB-ZK-UBW">
+                                            <rect key="frame" x="8" y="7" width="524" height="30"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                            <connections>
+                                                <outlet property="delegate" destination="qw4-io-P0E" id="7FV-bb-eY7"/>
+                                            </connections>
+                                        </textField>
+                                        <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G1N-mC-yce">
+                                            <rect key="frame" x="540" y="11" width="22" height="22"/>
+                                            <state key="normal" image="minus"/>
+                                            <connections>
+                                                <action selector="removePhone:" destination="qw4-io-P0E" eventType="touchUpInside" id="R5P-pO-O7Y"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="centerY" secondItem="uma-GO-CCq" secondAttribute="centerY" constant="0.25" id="NVc-Qs-JHK"/>
-                                        <constraint firstItem="uma-GO-CCq" firstAttribute="leading" secondItem="l2k-sM-xiY" secondAttribute="leadingMargin" id="rEg-xL-Xha"/>
+                                        <constraint firstItem="Y3s-ye-rlt" firstAttribute="leading" secondItem="G1N-mC-yce" secondAttribute="trailing" constant="8" id="5FW-Jg-Lt4"/>
+                                        <constraint firstAttribute="centerY" secondItem="9oB-ZK-UBW" secondAttribute="centerY" constant="-0.25" id="IXi-sE-nkY"/>
+                                        <constraint firstItem="Y3s-ye-rlt" firstAttribute="trailing" secondItem="l2k-sM-xiY" secondAttribute="trailingMargin" id="NZ9-Lw-TK1"/>
+                                        <constraint firstItem="G1N-mC-yce" firstAttribute="centerY" secondItem="Y3s-ye-rlt" secondAttribute="centerY" id="O2s-ix-VNh"/>
+                                        <constraint firstItem="G1N-mC-yce" firstAttribute="leading" secondItem="9oB-ZK-UBW" secondAttribute="trailing" constant="8" id="WcE-gy-HPw"/>
+                                        <constraint firstAttribute="centerY" secondItem="Y3s-ye-rlt" secondAttribute="centerY" constant="-0.25" id="ndf-L2-vYm"/>
+                                        <constraint firstItem="9oB-ZK-UBW" firstAttribute="leading" secondItem="l2k-sM-xiY" secondAttribute="leadingMargin" id="wQ3-xZ-X6y"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -278,4 +299,8 @@
             <point key="canvasLocation" x="219" y="-137"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="minus" width="22" height="22"/>
+        <image name="plus" width="22" height="22"/>
+    </resources>
 </document>
