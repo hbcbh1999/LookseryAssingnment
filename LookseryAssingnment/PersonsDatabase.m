@@ -184,7 +184,7 @@ int NSLogQueryResult(void *pArg, int argc, char **argv, char **columnNames){
     
     // TODO: экранирование имени
     NSString *sqlUpdate = [NSString stringWithFormat:
-       @"UPDATE persons SET name = \"%@\", birthday = %@, about = %@, isfemale = %i WHERE identifier = %ld",
+       @"UPDATE persons SET name = \"%@\", birthday = %@, about = \"%@\", isfemale = %i WHERE identifier = %ld",
        person.name ?: @"NULL",
        person.birthday ? [NSString stringWithFormat:@"%f", [person.birthday timeIntervalSince1970]] : @"NULL",
        person.about ?: @"NULL",
