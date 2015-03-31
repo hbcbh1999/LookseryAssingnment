@@ -430,6 +430,10 @@ const CGFloat kTextViewVerticalPadding = 8;
     self.person.phones = array;
     [self setChanged:YES];
     [self.tableView reloadData];
+    // Вновь добавленная ячейка может оказаться за экраном
+    NSIndexPath *indexPathOfAddedRow = [NSIndexPath indexPathForRow: 4 + (self.person.phones.count > 0 ? self.person.phones.count : 1) inSection:0];
+    CGRect rectOfAddedRow = [self.tableView rectForRowAtIndexPath:indexPathOfAddedRow];
+    [self.tableView scrollRectToVisible:rectOfAddedRow animated:YES];
 }
 
 - (IBAction)removePhone:(UIButton*)sender {
@@ -473,7 +477,10 @@ const CGFloat kTextViewVerticalPadding = 8;
     // Для того чтоб высота ячейки менялась
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
-
+    // После увеличения высоты ячейки нижний ее край может уехать под клавиатуру.
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow: 4 + (self.person.phones.count > 0 ? self.person.phones.count : 1) + 1 inSection:0];
+    CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
+    [self.tableView scrollRectToVisible:rect animated:YES];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)replacementText {
