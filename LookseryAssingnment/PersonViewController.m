@@ -264,6 +264,7 @@ const CGFloat kTextViewVerticalPadding = 8;
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [controlBeingEdited resignFirstResponder];
     return self.editMode || self.person.isNewRecord ? indexPath : nil;
 }
 
@@ -308,6 +309,9 @@ const CGFloat kTextViewVerticalPadding = 8;
 #pragma mark - UITextFieldDelegate
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (isDateOpen) {
+        [self hideDatePickerCell];
+    }
     [self setChanged:YES];
     controlBeingEdited = textField;
 }
@@ -380,6 +384,10 @@ const CGFloat kTextViewVerticalPadding = 8;
 #pragma mark -
 
 - (IBAction)sexSwitchChanged:(UISwitch*)sender {
+    if (isDateOpen) {
+        [self hideDatePickerCell];
+    }
+    [controlBeingEdited resignFirstResponder];
     self.person.isFemale = sender.isOn;
     UILabel *l = (UILabel*)[sender.superview viewWithTag:kSexCell_labelTag];
     l.text = self.person.isFemale ? @"is female" : @"is male";
@@ -434,6 +442,9 @@ const CGFloat kTextViewVerticalPadding = 8;
 #pragma mark - UITextViewDelegate
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
+    if (isDateOpen) {
+        [self hideDatePickerCell];
+    }
     [self setChanged:YES];
     controlBeingEdited = textView;
 }
