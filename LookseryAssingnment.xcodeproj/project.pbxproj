@@ -34,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		352AEC4A1ACB24D200D22A48 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		353B1F021AADBE39004234C5 /* LookseryAssingnment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LookseryAssingnment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		353B1F061AADBE39004234C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		353B1F071AADBE39004234C5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -286,6 +287,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				353B1F131AADBE39004234C5 /* Base */,
+				352AEC4A1ACB24D200D22A48 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -390,7 +392,7 @@
 					SQLITE_ENABLE_UNICODE,
 				);
 				INFOPLIST_FILE = LookseryAssingnment/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -405,7 +407,7 @@
 					SQLITE_ENABLE_UNICODE,
 				);
 				INFOPLIST_FILE = LookseryAssingnment/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
