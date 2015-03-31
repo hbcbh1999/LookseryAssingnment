@@ -1,0 +1,36 @@
+
+/* Class = "UITextField"; placeholder = "name"; ObjectID = "2oV-pE-n6y"; */
+"2oV-pE-n6y.placeholder" = "name";
+
+/* Class = "UILabel"; text = "Press to add image"; ObjectID = "5zD-HD-3se"; */
+"5zD-HD-3se.text" = "Press to add image";
+
+/* Class = "UITableViewController"; title = "Persons"; ObjectID = "7bK-jq-Zjz"; */
+"7bK-jq-Zjz.title" = "Persons";
+
+/* Class = "UITextField"; placeholder = "phone"; ObjectID = "9oB-ZK-UBW"; */
+"9oB-ZK-UBW.placeholder" = "phone";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "Arm-wq-HPj"; */
+"Arm-wq-HPj.text" = "Title";
+
+/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet gdfghdfh ghjfghj hgjfgjh jghghj ghj ghj ghj ghj"; ObjectID = "N8b-gH-aVv"; */
+"N8b-gH-aVv.text" = "Lorem ipsum dolor sit er elit lamet gdfghdfh ghjfghj hgjfgjh jghghj ghj ghj ghj ghj";
+
+/* Class = "UINavigationController"; title = "Persons"; ObjectID = "RMx-3f-FxP"; */
+"RMx-3f-FxP.title" = "Persons";
+
+/* Class = "UINavigationItem"; title = "Persons"; ObjectID = "Zdf-7t-Un8"; */
+"Zdf-7t-Un8.title" = "Persons";
+
+/* Class = "UILabel"; text = "Max Max Max Max"; ObjectID = "fP1-Je-C00"; */
+"fP1-Je-C00.text" = "Max Max Max Max";
+
+/* Class = "UILabel"; text = "Sex"; ObjectID = "hav-yj-YEU"; */
+"hav-yj-YEU.text" = "Sex";
+
+/* Class = "UILabel"; text = "is female"; ObjectID = "iLv-Tb-qgG"; */
+"iLv-Tb-qgG.text" = "is female";
+
+/* Class = "UILabel"; text = "Birthday label"; ObjectID = "xV7-U7-XoD"; */
+"xV7-U7-XoD.text" = "Birthday label";

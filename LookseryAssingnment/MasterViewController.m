@@ -52,7 +52,7 @@
     if ([[segue identifier] isEqualToString:@"showPerson"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         Person *person = [database personWithOffset:indexPath.row];
-        PersonViewController *controller = (PersonViewController *)[[segue destinationViewController] topViewController];
+        PersonViewController *controller = (PersonViewController *)[segue destinationViewController];
         [controller setPerson:person];
         controller.personViewControllerDelegate = self;
         [controller addEditButtonAndRemoveCancelButton];

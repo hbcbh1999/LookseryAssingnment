@@ -48,7 +48,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <segue destination="ag2-5q-k99" kind="show" identifier="showPerson" id="5dz-Zt-cuK"/>
+                                    <segue destination="qw4-io-P0E" kind="show" identifier="showPerson" id="KzR-i4-1wz"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -335,4 +335,7 @@
         <image name="minus" width="22" height="22"/>
         <image name="plus" width="22" height="22"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="KzR-i4-1wz"/>
+    </inferredMetricsTieBreakers>
 </document>
