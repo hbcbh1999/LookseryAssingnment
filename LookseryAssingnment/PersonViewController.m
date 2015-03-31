@@ -484,9 +484,10 @@ const CGFloat kTextViewVerticalPadding = 8;
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)replacementText {
+    // Ограничение длины поля about
     NSString *textAfterChange = [textView.text stringByReplacingCharactersInRange:range withString:replacementText];
     UILabel *warningLabel = (UILabel*)[textView.superview.superview viewWithTag:kAboutCell_warningLabelTag];
-    warningLabel.text = [NSString stringWithFormat:@"Max lenght of about feild is %ld characters", maxAboutLength];
+    warningLabel.text = [NSString stringWithFormat:@"Max lenght of about field is %ld characters", (unsigned long)maxAboutLength];
     if (textAfterChange.length > maxAboutLength) {
         [UIView animateWithDuration:1.0 animations:^{
             warningLabel.alpha = 1.0;
