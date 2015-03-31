@@ -169,25 +169,25 @@ const CGFloat kTextViewVerticalPadding = 8;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"heightForRowAtIndexPath: %ld:%ld", indexPath.section, indexPath.row);
+    CGFloat height = 44.0;
     if (indexPath.row ==  1) { // image
-        return 100;
+        height = 100;
     } else if (indexPath.row == 4) { // picker for birthday
-        return isDateOpen ? 219 : 0;
+        height = isDateOpen ? 219 : 0;
     } else if (indexPath.row == 4 + (self.person.phones.count > 0 ? self.person.phones.count : 1) + 1) { // about
-        return [self heightForTextView:aboutTextView] + 8 /* небольшой отступ */;
-    } else {
-        return 44;
+        height = [self heightForTextView:aboutTextView] + 8 /* небольшой отступ */;
     }
+    NSLog(@"heightForRowAtIndexPath:%ld:%ld == %f", (long)indexPath.section, (long)indexPath.row, height);
+    return height;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell;
-    NSLog(@"indexPath.row = %ld", indexPath.row);
+    NSLog(@"indexPath.row = %ld", (long)indexPath.row);
 
     // Вот здесь switch из swift развернулся бы во всей красе!..
     if (indexPath.row == 0) {
-        NSLog(@"Сделали ячейку с именем");
+        NSLog(@"Сделали ячейку с именем, indexPath.row = %ld", (long)indexPath.row);
         cell = [self.tableView dequeueReusableCellWithIdentifier:kNameCell forIndexPath:indexPath];
         // Здесь задействован и cell.contentView.tag, но можно не париться с исключением его из поиска так
         // как cell.contentView.tag == NSIntegerMax и вероятность совпадения с используемыми тагами нулевая.
@@ -197,7 +197,7 @@ const CGFloat kTextViewVerticalPadding = 8;
         cell.contentView.tag = NSIntegerMax; // см. комментарий в textFieldDidEndEditing:
         nameTextField.userInteractionEnabled = [self controlsAllowEditing];
     } else if (indexPath.row == 1) {
-        NSLog(@"Сделали ячейку с картинкой");
+        NSLog(@"Сделали ячейку с картинкой, indexPath.row = %ld", (long)indexPath.row);
         cell = [self.tableView dequeueReusableCellWithIdentifier:kImageCell forIndexPath:indexPath];
         UIImageView *imageView = (UIImageView*)[cell.contentView viewWithTag:kImageCell_imageTag];
         // TODO: почему-то упрямо не хочет устанавливать это в IB
@@ -208,7 +208,7 @@ const CGFloat kTextViewVerticalPadding = 8;
         UIButton *button = (UIButton*)[cell.contentView viewWithTag:kImageCell_buttonTag];
         button.enabled = [self controlsAllowEditing];
     } else if (indexPath.row == 2) {
-        NSLog(@"Сделали ячейку с полом");
+        NSLog(@"Сделали ячейку с полом, indexPath.row = %ld", (long)indexPath.row);
         cell = [self.tableView dequeueReusableCellWithIdentifier:kSexCell forIndexPath:indexPath];
         UISwitch *aswitch = (UISwitch*)[cell.contentView viewWithTag:kSexCell_switchTag];
         aswitch.on = self.person.isFemale;
@@ -216,12 +216,12 @@ const CGFloat kTextViewVerticalPadding = 8;
         l.text = self.person.isFemale ? @"is female" : @"is male";
         aswitch.enabled = [self controlsAllowEditing];
     }  else if (indexPath.row == 3) {
-        NSLog(@"Сделали ячейку с датой рождения");
+        NSLog(@"Сделали ячейку с датой рождения, indexPath.row = %ld", (long)indexPath.row);
         cell = [self.tableView dequeueReusableCellWithIdentifier:kBirthdayCell forIndexPath:indexPath];
         UILabel *l = (UILabel*)[cell.contentView viewWithTag:kBirthdayCell_labelTag];
         l.text = [self birthdayStringFromDate:self.person.birthday];
     }  else if (indexPath.row == 4) {
-        NSLog(@"Сделали ячейку с пикером даты");
+        NSLog(@"Сделали ячейку с пикером даты, indexPath.row = %ld", (long)indexPath.row);
         cell = [self.tableView dequeueReusableCellWithIdentifier:kBirthdayPickerCell forIndexPath:indexPath];
         datePicker = (UIDatePicker*)[cell.contentView viewWithTag:kBirthdayPickerCell_pickerTag];
         if (self.person.birthday != nil) {
@@ -230,7 +230,7 @@ const CGFloat kTextViewVerticalPadding = 8;
         datePicker.enabled = isDateOpen;
         datePicker.alpha = isDateOpen ? 1.0 : 0.0;
     } else if ((indexPath.row > 4) && (indexPath.row <= 4 + (self.person.phones.count > 0 ? self.person.phones.count : 1))) {
-        NSLog(@"Сделали ячейку с телефоном");
+        NSLog(@"Сделали ячейку с телефоном, indexPath.row = %ld", (long)indexPath.row);
         // Когда телефонов нет все равно под телефон должна быть одна ячейка
         cell = [self.tableView dequeueReusableCellWithIdentifier:kPhoneCell forIndexPath:indexPath];
         // Здесь нужно быть внимательным с выбором ячейки по tag, так как задействован и cell.contentView.tag.
@@ -248,14 +248,14 @@ const CGFloat kTextViewVerticalPadding = 8;
         ph.text = self.person.phones[phoneIndex];
         cell.contentView.tag = phoneIndex; // см. комментарий в textFieldDidEndEditing:
     } else if (indexPath.row == 4 + (self.person.phones.count > 0 ? self.person.phones.count : 1) + 1) {
-        NSLog(@"Сделали ячейку about");
+        NSLog(@"Сделали ячейку about, indexPath.row = %ld", (long)indexPath.row);
         cell = [self.tableView dequeueReusableCellWithIdentifier:kAboutCell forIndexPath:indexPath];
         aboutTextView = (UITextView*)[cell.contentView viewWithTag:kAboutCell_textViewTag];
         aboutTextView.text = self.person.about;
         aboutTextView.contentSize = CGSizeMake(aboutTextView.bounds.size.width, [self heightForTextView:aboutTextView]);
         aboutTextView.userInteractionEnabled = [self controlsAllowEditing];
     } else {
-        NSLog(@"Сделали пустую ячейку");
+        NSLog(@"Сделали пустую ячейку, indexPath.row = %ld", (long)indexPath.row);
         cell = [self.tableView dequeueReusableCellWithIdentifier:kEmptyCell forIndexPath:indexPath];
         cell.backgroundColor = [UIColor redColor];
     }
