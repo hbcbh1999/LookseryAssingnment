@@ -82,6 +82,13 @@
     return YES;
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [database removePersonWithOffset:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+    }
+}
+
 #pragma mark - PersonlViewControllerDelegate
 
 - (void)personViewController:(PersonViewController*)personViewController updatePerson:(Person*)person {

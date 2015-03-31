@@ -23,4 +23,6 @@
 -(unsigned long)personsCount;
 -(Person*)personWithOffset:(unsigned long)offset; // nil означает ошибку
 
+-(BOOL)removePersonWithOffset:(unsigned long)offset;
+
 @end
