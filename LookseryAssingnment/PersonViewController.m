@@ -290,6 +290,9 @@ const CGFloat kTextViewVerticalPadding = 8;
     } completion:^(BOOL finished) {
         //datePicker.superview.superview.clipsToBounds = NO;
         datePicker.enabled = YES;
+        // Скролить чтоб сделать ячейку с пикером полностью видимой
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:4 inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+
     }];
 }
 
