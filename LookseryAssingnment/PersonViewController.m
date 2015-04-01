@@ -9,8 +9,11 @@
 #import "PersonViewController.h"
 #import "PersonsDatabase.h"
 #import <QuartzCore/QuartzCore.h>
+#import "NSString+highlight.h"
 
+#define attributeToHighlightHashtags NSForegroundColorAttributeName
 #define colorToHighlightHashtags [UIColor redColor]
+
 const NSUInteger maxAboutLength = 256;
 
 static NSString *kNameCell = @"name";
@@ -56,6 +59,8 @@ const CGFloat kTextViewVerticalPadding = 8;
     UIDatePicker *datePicker;
 
     UITextView *aboutTextView; // about cell
+
+    NSRegularExpression *regexForHashTag;
 }
 @end
 
@@ -102,6 +107,8 @@ const CGFloat kTextViewVerticalPadding = 8;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    regexForHashTag = [NSRegularExpression regularExpressionWithPattern:@"#(\\w+)" options:0 error:nil];
+
     if (!self.editMode) {
         [self addCancelAndDoneButtons];
     } else {
@@ -251,8 +258,14 @@ const CGFloat kTextViewVerticalPadding = 8;
         NSLog(@"Сделали ячейку about, indexPath.row = %ld", (long)indexPath.row);
         cell = [self.tableView dequeueReusableCellWithIdentifier:kAboutCell forIndexPath:indexPath];
         aboutTextView = (UITextView*)[cell.contentView viewWithTag:kAboutCell_textViewTag];
-        aboutTextView.text = self.person.about;
-        aboutTextView.contentSize = CGSizeMake(aboutTextView.bounds.size.width, [self heightForTextView:aboutTextView]);
+
+        if (self.person.about != nil) {
+            // Подсвечивание хештегов
+            aboutTextView.attributedText = [self.person.about addAttribute:attributeToHighlightHashtags value:colorToHighlightHashtags regex:regexForHashTag options:0];
+        } else {
+            aboutTextView.text = nil;
+        }
+
         aboutTextView.userInteractionEnabled = [self controlsAllowEditing];
     } else {
         NSLog(@"Сделали пустую ячейку, indexPath.row = %ld", (long)indexPath.row);
@@ -464,15 +477,7 @@ const CGFloat kTextViewVerticalPadding = 8;
 
 - (void) textViewDidChange:(UITextView *)textView {
     // Подсвечивание хештегов
-    NSString *text = textView.text;
-    NSRange range = NSMakeRange(0, text.length);
-
-    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"#(\\w+)" options:0 error:nil];
-    [regex enumerateMatchesInString:textView.text options:0 range:range usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-        [attributedText addAttribute:NSForegroundColorAttributeName value:colorToHighlightHashtags range:result.range];
-    }];
-    textView.attributedText = attributedText;
+    aboutTextView.attributedText = [textView.text addAttribute:attributeToHighlightHashtags value:colorToHighlightHashtags regex:regexForHashTag options:0];
 
     // Для того чтоб высота ячейки менялась
     [self.tableView beginUpdates];
