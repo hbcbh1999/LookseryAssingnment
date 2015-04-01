@@ -21,6 +21,7 @@
 		353B1F381AADD1C4004234C5 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 353B1F371AADD1C4004234C5 /* libsqlite3.dylib */; };
 		353B1F3A1AAE147B004234C5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353B1F391AAE147B004234C5 /* QuartzCore.framework */; };
 		357F43891AC98B94000CFA45 /* UITextViewWithPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 357F43881AC98B94000CFA45 /* UITextViewWithPlaceholder.m */; };
+		35D2A8E21ACC92E40096922D /* NSString+highlight.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D2A8E11ACC92E40096922D /* NSString+highlight.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,8 @@
 		353B1F391AAE147B004234C5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		357F43871AC98B94000CFA45 /* UITextViewWithPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextViewWithPlaceholder.h; sourceTree = "<group>"; };
 		357F43881AC98B94000CFA45 /* UITextViewWithPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITextViewWithPlaceholder.m; sourceTree = "<group>"; };
+		35D2A8E01ACC92E40096922D /* NSString+highlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+highlight.h"; sourceTree = "<group>"; };
+		35D2A8E11ACC92E40096922D /* NSString+highlight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+highlight.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +117,8 @@
 				353B1F321AADD13C004234C5 /* PersonsDatabase.m */,
 				353B1F0F1AADBE39004234C5 /* PersonViewController.h */,
 				353B1F101AADBE39004234C5 /* PersonViewController.m */,
+				35D2A8E01ACC92E40096922D /* NSString+highlight.h */,
+				35D2A8E11ACC92E40096922D /* NSString+highlight.m */,
 				357F43871AC98B94000CFA45 /* UITextViewWithPlaceholder.h */,
 				357F43881AC98B94000CFA45 /* UITextViewWithPlaceholder.m */,
 				353B1F121AADBE39004234C5 /* Main.storyboard */,
@@ -257,6 +262,7 @@
 				353B1F0E1AADBE39004234C5 /* MasterViewController.m in Sources */,
 				353B1F301AADBFB1004234C5 /* Person.m in Sources */,
 				357F43891AC98B94000CFA45 /* UITextViewWithPlaceholder.m in Sources */,
+				35D2A8E21ACC92E40096922D /* NSString+highlight.m in Sources */,
 				353B1F081AADBE39004234C5 /* main.m in Sources */,
 				353B1F361AADD175004234C5 /* sqlite3_unicode.c in Sources */,
 				353B1F331AADD13C004234C5 /* PersonsDatabase.m in Sources */,
