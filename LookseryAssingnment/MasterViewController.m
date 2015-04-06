@@ -11,6 +11,8 @@
 #import "Person.h"
 #import "PersonsDatabase.h"
 
+NSString *kNameNotSet = @"Имя не указано";
+
 @interface MasterViewController () <PersonViewControllerDelegate> {
     PersonsDatabase *database;
 }
@@ -67,8 +69,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-    Person *object = [database personWithOffset:indexPath.row];
-    cell.textLabel.text = [object name];
+    Person *person = [database personWithOffset:indexPath.row];
+    NSString *trimmed_name = [person.name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    cell.textLabel.text = [trimmed_name isEqualToString:@""] ? kNameNotSet : person.name;
+
     return cell;
 }
 
