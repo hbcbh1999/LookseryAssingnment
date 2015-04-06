@@ -107,12 +107,14 @@ int NSLogQueryResult(void *pArg, int argc, char **argv, char **columnNames){
         // то только в отдельной таблице.
         
         // TODO: при реализации удаления добавить триггеры на удаление телефонов и картинок
+        const char *triggerCreate = "CREATE TRIGGER IF NOT EXISTS person_deletion_trigger BEFORE DELETE ON persons BEGIN DELETE FROM phones WHERE phones.identifier = OLD.identifier; DELETE FROM images WHERE images.identifier = OLD.identifier; END;";
         
         int resPersonsCreate = sqlite3_exec(database, personsCreate, NULL, NULL, &errMsg);
         int resPhonesCreate = sqlite3_exec(database, phonesCreate, NULL, NULL, &errMsg);
         int resImagesCreate = sqlite3_exec(database, imagesCreate, NULL, NULL, &errMsg);
-        
-        if (resPersonsCreate!=SQLITE_OK || resPhonesCreate!=SQLITE_OK || resImagesCreate!=SQLITE_OK)
+        int resTriggerCreate = sqlite3_exec(database, triggerCreate, NULL, NULL, &errMsg);
+
+        if (resPersonsCreate!=SQLITE_OK || resPhonesCreate!=SQLITE_OK || resImagesCreate!=SQLITE_OK || resTriggerCreate!=SQLITE_OK)
         {
             NSLog(@"%s: не могу создать таблицы в базе данных", __FUNCTION__);
             sqlite3_close(database);
@@ -362,20 +364,7 @@ int NSLogQueryResult(void *pArg, int argc, char **argv, char **columnNames){
         return NO;
     }
     
-    // TODO: добавть триггеры для удаления записей из phones и images при удалении записи из person
-    NSString *sqlDeletePhones = [NSString stringWithFormat:@"DELETE FROM phones WHERE identifier = %lld", identifier];
-    res = sqlite3_exec(database, [sqlDeletePhones UTF8String], NULL, NULL, &errMsg);
-    if (res != SQLITE_OK) {
-        NSLog(@"%s: ошибка %s при удалении записи из таблицы", __FUNCTION__, errMsg);
-        return NO;
-    }
-    
-    NSString *sqlDeleteImages = [NSString stringWithFormat:@"DELETE FROM images WHERE identifier = %lld", identifier];
-    res = sqlite3_exec(database, [sqlDeleteImages UTF8String], NULL, NULL, &errMsg);
-    if (res != SQLITE_OK) {
-        NSLog(@"%s: ошибка %s при обновлении записи в таблице", __FUNCTION__, errMsg);
-        return NO;
-    }
+    // Остальное удаляется триггером
 
     return YES;
 }
