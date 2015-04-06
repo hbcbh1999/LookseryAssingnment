@@ -150,11 +150,14 @@ int NSLogQueryResult(void *pArg, int argc, char **argv, char **columnNames){
    
     if (person.phones && [person.phones count] != 0) {
         for ( NSString *number in person.phones ) {
-            NSString *sqlInsertPhone = [NSString stringWithFormat:@"INSERT INTO phones (identifier, number) VALUES (%lli, \"%@\") ", identifier, number];
-            int res = sqlite3_exec(database, [sqlInsertPhone UTF8String], NULL, NULL, &errMsg);
-            if (res != SQLITE_OK) {
-                NSLog(@"%s: Ошибка %s при добавлении записи в таблицу телефонов", __FUNCTION__, errMsg);
-                return NO;
+            NSString *trimmed = [number stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            if (![trimmed isEqualToString:@""]) {
+                NSString *sqlInsertPhone = [NSString stringWithFormat:@"INSERT INTO phones (identifier, number) VALUES (%lli, \"%@\") ", identifier, trimmed];
+                int res = sqlite3_exec(database, [sqlInsertPhone UTF8String], NULL, NULL, &errMsg);
+                if (res != SQLITE_OK) {
+                    NSLog(@"%s: Ошибка %s при добавлении записи в таблицу телефонов", __FUNCTION__, errMsg);
+                    return NO;
+                }
             }
         }
     }
@@ -207,11 +210,14 @@ int NSLogQueryResult(void *pArg, int argc, char **argv, char **columnNames){
             return NO;
         }
         for ( NSString *number in person.phones ) {
-            NSString *sqlInsertPhone = [NSString stringWithFormat:@"INSERT INTO phones (identifier, number) VALUES (%ld, \"%@\")", person.identifier, number];
-            int res = sqlite3_exec(database, [sqlInsertPhone UTF8String], NULL, NULL, &errMsg);
-            if (res != SQLITE_OK) {
-                NSLog(@"%s: Ошибка %s при добавлении записи в таблицу телефонов", __FUNCTION__, errMsg);
-                return NO;
+            NSString *trimmed = [number stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            if (![trimmed isEqualToString:@""]) {
+                NSString *sqlInsertPhone = [NSString stringWithFormat:@"INSERT INTO phones (identifier, number) VALUES (%li, \"%@\") ", person.identifier, trimmed];
+                int res = sqlite3_exec(database, [sqlInsertPhone UTF8String], NULL, NULL, &errMsg);
+                if (res != SQLITE_OK) {
+                    NSLog(@"%s: Ошибка %s при добавлении записи в таблицу телефонов", __FUNCTION__, errMsg);
+                    return NO;
+                }
             }
         }
     }
