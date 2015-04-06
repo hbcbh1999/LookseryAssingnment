@@ -134,10 +134,10 @@ int NSLogQueryResult(void *pArg, int argc, char **argv, char **columnNames){
 
     // TODO: экранирование имени
     NSString *sqlInsert = [NSString stringWithFormat:
-        @"INSERT INTO persons (name, birthday, about, isfemale) VALUES (\"%@\", %@, \"%@\", %i ) ",
-        person.name ?: @"NULL",
+        @"INSERT INTO persons (name, birthday, about, isfemale) VALUES (%@, %@, %@, %i ) ",
+        person.name ? [NSString stringWithFormat:@"\"%@\"", person.name] : @"NULL",
         person.birthday ? [NSString stringWithFormat:@"%f", [person.birthday timeIntervalSince1970]] : @"NULL",
-        person.about ?: @"NULL",
+        person.about ? [NSString stringWithFormat:@"\"%@\"", person.about] : @"NULL",
         person.isFemale ? 1 : 0 ];
     int res = sqlite3_exec(database, [sqlInsert UTF8String], NULL, NULL, &errMsg);
     
@@ -186,10 +186,10 @@ int NSLogQueryResult(void *pArg, int argc, char **argv, char **columnNames){
     
     // TODO: экранирование имени
     NSString *sqlUpdate = [NSString stringWithFormat:
-       @"UPDATE persons SET name = \"%@\", birthday = %@, about = \"%@\", isfemale = %i WHERE identifier = %ld",
-       person.name ?: @"NULL",
+       @"UPDATE persons SET name = %@, birthday = %@, about = %@, isfemale = %i WHERE identifier = %ld",
+       person.name ? [NSString stringWithFormat:@"\"%@\"", person.name] : @"NULL",
        person.birthday ? [NSString stringWithFormat:@"%f", [person.birthday timeIntervalSince1970]] : @"NULL",
-       person.about ?: @"NULL",
+       person.about ? [NSString stringWithFormat:@"\"%@\"", person.about] : @"NULL",
        person.isFemale ? 1 : 0,
        person.identifier];
     int res = sqlite3_exec(database, [sqlUpdate UTF8String], NULL, NULL, &errMsg);
