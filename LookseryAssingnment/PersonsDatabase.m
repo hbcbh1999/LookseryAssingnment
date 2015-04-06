@@ -105,8 +105,6 @@ int NSLogQueryResult(void *pArg, int argc, char **argv, char **columnNames){
         const char *imagesCreate = "CREATE TABLE IF NOT EXISTS\"images\" (\"identifier\" INTEGER NOT NULL,\"image\" BLOB)";
         // Для картинок отдельная таблица только из-за всеобщего поверья что если уж хранить картинки в БД,
         // то только в отдельной таблице.
-        
-        // TODO: при реализации удаления добавить триггеры на удаление телефонов и картинок
         const char *triggerCreate = "CREATE TRIGGER IF NOT EXISTS person_deletion_trigger BEFORE DELETE ON persons BEGIN DELETE FROM phones WHERE phones.identifier = OLD.identifier; DELETE FROM images WHERE images.identifier = OLD.identifier; END;";
         
         int resPersonsCreate = sqlite3_exec(database, personsCreate, NULL, NULL, &errMsg);
@@ -274,8 +272,8 @@ int NSLogQueryResult(void *pArg, int argc, char **argv, char **columnNames){
     NSMutableArray *phones = [NSMutableArray new];
     NSString *about = nil;
 
-    // Таблица persons
-    NSString *sql = [NSMutableString stringWithFormat:@"SELECT identifier, name, birthday, about, isfemale FROM persons ORDER BY identifier LIMIT 1 OFFSET %lu", offset];
+    // Таблицы persons и images
+    NSString *sql = [NSMutableString stringWithFormat:@"SELECT p.identifier, p.name, p.birthday, p.about, p.isFemale, i.image FROM persons p LEFT OUTER JOIN images i on p.identifier = i.identifier ORDER BY p.identifier LIMIT 1 OFFSET %lu", offset];
     
     sqlite3_stmt *stmt;
     int res = sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, NULL);
@@ -300,23 +298,10 @@ int NSLogQueryResult(void *pArg, int argc, char **argv, char **columnNames){
             about = [NSString stringWithUTF8String:(const char*)_about];
         
         isFemale = sqlite3_column_int(stmt, 4);
-    }
-    sqlite3_finalize(stmt);
 
-    // Таблица images
-    
-    sql = [NSMutableString stringWithFormat:@"SELECT image FROM images WHERE identifier = %lu", identifier];
-    
-    res = sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, NULL);
-    if (res != SQLITE_OK) {
-        NSLog(@"%s line %i sqlite3_prepare_v2() failed", __FUNCTION__, __LINE__);
-        return nil;
-    }
-    
-    if (sqlite3_step(stmt) == SQLITE_ROW) {
-        const void *_bytes = sqlite3_column_blob(stmt, 0);
+        const void *_bytes = sqlite3_column_blob(stmt, 5);
         if (_bytes!=NULL) {
-            int length = sqlite3_column_bytes(stmt, 0);
+            int length = sqlite3_column_bytes(stmt, 5);
             image = [UIImage imageWithData:[NSData dataWithBytes:_bytes length:length]];
         }
     }
