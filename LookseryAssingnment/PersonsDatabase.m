@@ -344,34 +344,13 @@ int NSLogQueryResult(void *pArg, int argc, char **argv, char **columnNames){
 
 -(BOOL)removePersonWithOffset:(unsigned long)offset {
     char *errMsg;
-    sqlite3_stmt *stmt;
-    long long identifier = 0;
-
-    NSString *sqlSelectPerson = [NSMutableString stringWithFormat:@"SELECT identifier FROM persons ORDER BY identifier LIMIT 1 OFFSET %lu", offset];
-    int res = sqlite3_prepare_v2(database, [sqlSelectPerson UTF8String], -1, &stmt, NULL);
-    if (res != SQLITE_OK) {
-        NSLog(@"%s line %i sqlite3_prepare_v2() failed", __FUNCTION__, __LINE__);
-        return NO;
-    }
-    
-    if (sqlite3_step(stmt) == SQLITE_ROW) {
-        identifier = sqlite3_column_int64(stmt, 0);
-    } else {
-        NSLog(@"%s: отсуствует удаляемая запись", __FUNCTION__);
-        sqlite3_finalize(stmt);
-        return NO;
-    }
-    sqlite3_finalize(stmt);
-
-    NSString *sqlDeletePerson = [NSString stringWithFormat:@"DELETE FROM persons WHERE identifier = %lld", identifier];
-    res = sqlite3_exec(database, [sqlDeletePerson UTF8String], NULL, NULL, &errMsg);
+    NSString *sqlDeletePerson = [NSString stringWithFormat:@"DELETE FROM persons WHERE identifier = (SELECT identifier FROM persons ORDER BY identifier LIMIT 1 OFFSET %lu)", offset];
+    int res = sqlite3_exec(database, [sqlDeletePerson UTF8String], NULL, NULL, &errMsg);
     if (res != SQLITE_OK) {
         NSLog(@"%s: ошибка %s при удалении записи из таблицы", __FUNCTION__, errMsg);
         return NO;
     }
-    
     // Остальное удаляется триггером
-
     return YES;
 }
 
