@@ -99,24 +99,23 @@ int NSLogQueryResult(void *pArg, int argc, char **argv, char **columnNames){
             if (res != SQLITE_OK)
                 NSLog(@"%s: error %s issuing \'%s\' directive to sqlite db", __FUNCTION__, pragma, errMsg);
         }
-        
-        const char *personsCreate = "CREATE TABLE IF NOT EXISTS \"persons\" (\"name\" TEXT,\"birthday\" REAL,\"about\" TEXT,\"isfemale\" INTEGER, \"identifier\" INTEGER PRIMARY KEY AUTOINCREMENT)";
-        const char *phonesCreate = "CREATE TABLE IF NOT EXISTS \"phones\" (\"identifier\" INTEGER NOT NULL,\"number\" TEXT)";
-        const char *imagesCreate = "CREATE TABLE IF NOT EXISTS\"images\" (\"identifier\" INTEGER NOT NULL,\"image\" BLOB)";
-        // Для картинок отдельная таблица только из-за всеобщего поверья что если уж хранить картинки в БД,
-        // то только в отдельной таблице.
-        const char *triggerCreate = "CREATE TRIGGER IF NOT EXISTS person_deletion_trigger BEFORE DELETE ON persons BEGIN DELETE FROM phones WHERE phones.identifier = OLD.identifier; DELETE FROM images WHERE images.identifier = OLD.identifier; END;";
-        
-        int resPersonsCreate = sqlite3_exec(database, personsCreate, NULL, NULL, &errMsg);
-        int resPhonesCreate = sqlite3_exec(database, phonesCreate, NULL, NULL, &errMsg);
-        int resImagesCreate = sqlite3_exec(database, imagesCreate, NULL, NULL, &errMsg);
-        int resTriggerCreate = sqlite3_exec(database, triggerCreate, NULL, NULL, &errMsg);
 
-        if (resPersonsCreate!=SQLITE_OK || resPhonesCreate!=SQLITE_OK || resImagesCreate!=SQLITE_OK || resTriggerCreate!=SQLITE_OK)
-        {
-            NSLog(@"%s: не могу создать таблицы в базе данных", __FUNCTION__);
-            sqlite3_close(database);
-            self = nil;
+        char *sql_instructions[] = {
+            "CREATE TABLE IF NOT EXISTS \"persons\" (\"name\" TEXT,\"birthday\" REAL,\"about\" TEXT,\"isfemale\" INTEGER, \"identifier\" INTEGER PRIMARY KEY AUTOINCREMENT)",
+            "CREATE TABLE IF NOT EXISTS \"phones\" (\"identifier\" INTEGER NOT NULL,\"number\" TEXT)",
+            "CREATE TABLE IF NOT EXISTS\"images\" (\"identifier\" INTEGER NOT NULL,\"image\" BLOB)",
+            // Для картинок отдельная таблица только из-за всеобщего поверья что если уж хранить картинки в БД, то только в отдельной таблице.
+            "CREATE TRIGGER IF NOT EXISTS person_deletion_trigger BEFORE DELETE ON persons BEGIN DELETE FROM phones WHERE phones.identifier = OLD.identifier; DELETE FROM images WHERE images.identifier = OLD.identifier; END;"
+        };
+
+        for (unsigned i=0; i<sizeof(sql_instructions)/sizeof(*sql_instructions); i++) {
+            char *err;
+            if (sqlite3_exec(database, sql_instructions[i], NULL, NULL, &err) != SQLITE_OK)
+            {
+                NSLog(@"%s: не могу создать таблицу или триггер в базе данных", __FUNCTION__);
+                sqlite3_close(database);
+                self = nil;
+            }
         }
     }
 	return self;
