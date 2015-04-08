@@ -71,7 +71,7 @@ NSString *kNameNotSet = @"Имя не указано";
 
     Person *person = [database personWithOffset:indexPath.row];
     NSString *trimmed_name = [person.name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    cell.textLabel.text = [trimmed_name isEqualToString:@""] ? kNameNotSet : person.name;
+    cell.textLabel.text = trimmed_name==nil || [trimmed_name isEqualToString:@""] ? kNameNotSet : person.name;
 
     return cell;
 }
