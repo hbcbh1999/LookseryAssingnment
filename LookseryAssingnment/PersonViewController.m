@@ -448,6 +448,10 @@ const CGFloat kTextViewVerticalPadding = 8;
     NSIndexPath *indexPathOfAddedRow = [NSIndexPath indexPathForRow: 4 + (self.person.phones.count > 0 ? self.person.phones.count : 1) inSection:0];
     CGRect rectOfAddedRow = [self.tableView rectForRowAtIndexPath:indexPathOfAddedRow];
     [self.tableView scrollRectToVisible:rectOfAddedRow animated:YES];
+
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPathOfAddedRow];
+    UITextField *ph = (UITextField*)[[cell.contentView.subviews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"tag=%d", kPhoneCell_phoneTag]] firstObject];
+    [ph becomeFirstResponder];
 }
 
 - (IBAction)removePhone:(UIButton*)sender {
