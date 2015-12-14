@@ -27,3 +27,7 @@ This project implements this.
 Looksery refused me, but that doesn't matter too much.
 
 Later I used this project as example project showing my students at [itstep](http://itstep.org/en/) some principles. Today instaed of removing this project from hard drive I've decided just make this project public here on GitHub.
+
+Here how it's going:
+
+![how it's going](https://cloud.githubusercontent.com/assets/1630974/11786477/85912dde-a28f-11e5-9369-ea60556c278b.gif)
