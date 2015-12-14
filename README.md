@@ -1,6 +1,6 @@
 # LookseryAssingnment
 
-In march 2015 Looksery interviewing me asked make small app with such requrements (in Russian but I'll translate this into English in a day or two):
+In march 2015 [Looksery](https://www.looksery.com) interviewing me asked to make small app with following requrements (in Russian but I'll translate this into English the other day):
 
 Создать приложение с двумя экранами.
 
@@ -26,4 +26,4 @@ This project implements this.
 
 Looksery refused me, but that doesn't matter too much.
 
-Later I used this project as example project showing my students at [itstep](http://itstep.org/en/) some principles. Today instaed of removing I've decided just make this project public here on GitHub.
+Later I used this project as example project showing my students at [itstep](http://itstep.org/en/) some principles. Today instaed of removing this project from hard drive I've decided just make this project public here on GitHub.
