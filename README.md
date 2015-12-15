@@ -1,26 +1,28 @@
 # LookseryAssingnment
 
-In march 2015 [Looksery](https://www.looksery.com) interviewing me asked to make small app with following requrements (in Russian but I'll translate this into English the other day):
+In march 2015 [Looksery](https://www.looksery.com) interviewing me asked to make small app with following requirements:
 
-Создать приложение с двумя экранами.
+===============
+App has two screens.
 
-Первый экран представляет из себе простой список состоящий их сохраненных данных (профилей пользователя) и кнопку добавления нового профиля.
+The first one is a list of saved user profiles and a button to add new profile.
 
-При нажатии на ячейку/профиль, открывается экран профиля, у которого есть два режима - просмотра и редактирования.
+Tapping on a cell represinting profile opens profile details screen with view and edit modes.
 
-Экран профиля должен быть реализован при помощи UITableView
+Profile details screen should be implemented with help of UITableView.
 
-Профиль состоит из следующих полей/ячеек.
-1.	Аватар ( картинка которую можно изменить выбором из галереи)
-2.	ФИО
-3.	Дата рождения
-4.	Пол
-5.	Номера телефона (у пользователя должна быть возможность ввести более одного номера телефона, должна быть проведена проверка, что номер не содержит некорректные символы). Каждый номер представляет отдельную строчку таблицы.
-6.	Поле “О себе”. Длина ограничена 256 символами. В случае если пользователь ввел хэштеги, они должны быть подсвечены красным. Например: “Я работаю в #looksery. Крутая компания :)”
+Profile consists of following fields:
+1.	Avatar (image which could be changed with image from gallery)
+2.	Name
+3.	Date of birth
+4.	Sex
+5.	Phone number (should be a way to add several phone numbers, phone number should be checked for allowed charachters). Each phone number takes its own table cell.
+6.	About. Limited to 256 lenght. Hashtags should be highlighted red. E.g., “Я работаю в #looksery. Крутая компания :)”
 
-После ввода всех данных у пользователя должна быть возможность сохранить профиль и перейти в режим просмотра.
+After filling all fields should be possible to save profile and view it.
 
-При перезапуске приложения данные должны быть сохранены.
+Data should persist app rerun.
+===============
 
 This project implements this.
 
