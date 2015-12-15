@@ -11,11 +11,17 @@ Tapping on a cell represinting profile opens profile details screen with view an
 Profile details screen should be implemented with help of UITableView.
 
 Profile consists of following fields:
+
 1.	Avatar (image which could be changed with image from gallery)
+
 2.	Name
+
 3.	Date of birth
+
 4.	Sex
+
 5.	Phone number (should be a way to add several phone numbers, phone number should be checked for allowed charachters). Each phone number takes its own table cell.
+
 6.	About. Limited to 256 lenght. Hashtags should be highlighted red. E.g., “Я работаю в #looksery. Крутая компания :)”
 
 After filling all fields should be possible to save profile and view it.
