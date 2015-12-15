@@ -2,7 +2,6 @@
 
 In march 2015 [Looksery](https://www.looksery.com) interviewing me asked to make small app with following requirements:
 
-===============
 App has two screens.
 
 The first one is a list of saved user profiles and a button to add new profile.
@@ -22,7 +21,6 @@ Profile consists of following fields:
 After filling all fields should be possible to save profile and view it.
 
 Data should persist app rerun.
-===============
 
 This project implements this.
 
