@@ -1,6 +1,6 @@
 # LookseryAssingnment
 
-In march 2015 [Looksery](https://www.looksery.com) interviewing me asked to make small app with following requirements:
+In March of 2015 [Looksery](https://www.looksery.com) interviewing me asked to make small app with following requirements:
 
 App has two screens.
 
