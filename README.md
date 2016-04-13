@@ -30,10 +30,9 @@ Data should persist app rerun.
 
 This project implements this.
 
-Looksery refused me, but that doesn't matter too much.
-
-Later I used this project as example project showing my students at [itstep](http://itstep.org/en/) some principles. Today instead of removing this project from hard drive I've decided just make this project public here on GitHub.
-
-Here how it's going:
-
+100% requirements were met. Here how it's going:
 ![how it's going](https://cloud.githubusercontent.com/assets/1630974/11786477/85912dde-a28f-11e5-9369-ea60556c278b.gif)
+
+Nevertheless, Looksery refused me. They said they didn't understand my code. "Ok, that not for everyone", I've said. To be honest I didn't say that loudly. But I am sure, they've read what was written on my face.
+
+Later I used this project as example project showing my students at [itstep](http://itstep.org/en/) some principles. Today instead of removing this project from hard drive I've decided just make this project public here on GitHub. Hope next interviewer will silenly reject me just looking into this project without bothering me and making my ego suffer.
