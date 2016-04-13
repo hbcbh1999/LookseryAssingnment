@@ -32,7 +32,7 @@ This project implements this.
 
 Looksery refused me, but that doesn't matter too much.
 
-Later I used this project as example project showing my students at [itstep](http://itstep.org/en/) some principles. Today instaed of removing this project from hard drive I've decided just make this project public here on GitHub.
+Later I used this project as example project showing my students at [itstep](http://itstep.org/en/) some principles. Today instead of removing this project from hard drive I've decided just make this project public here on GitHub.
 
 Here how it's going:
 
