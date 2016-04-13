@@ -31,6 +31,7 @@ Data should persist app rerun.
 This project implements this.
 
 100% requirements were met. Here how it's going:
+
 ![how it's going](https://cloud.githubusercontent.com/assets/1630974/11786477/85912dde-a28f-11e5-9369-ea60556c278b.gif)
 
 Nevertheless, Looksery refused me. They said they didn't understand my code. "Ok, that not for everyone", I've said. To be honest I didn't say that loudly. But I am sure, they've read what was written on my face.
